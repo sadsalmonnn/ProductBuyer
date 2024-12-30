@@ -1,0 +1,15 @@
+Goal: given any link, every minute scrape the website to retrieve desired product
+
+Architecture:
+
+MVC
+- View would be some text document
+- for now takes in input for what to be scraped
+
+Factory
+- 
+
+Strategy
+
+Command
+
