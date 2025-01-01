@@ -3,6 +3,7 @@ from time import sleep
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from typing import Dict
 
 class ProductBuyerViewController:
     _model: ProductBuyerModel
@@ -11,44 +12,50 @@ class ProductBuyerViewController:
     def __init__(self, model:ProductBuyerModel):
         self.model = model
 
-    def displaymenu(self):
-        print("Please select one of the following websites:")
-        for x in range(len(websites)):
-            print("\n" + str(x) + ". " + websites[x])
-        print("\n" + str(x + 1) + ". All of the above")
-
-    # def displayproducts(self):
-    #     products = self.model.getProducts()
-    #     print("Heres the list of products:")
-    #     for x in range(len(products)):
-    #         print("\n" + str(x) + ". " , products[x - 1])
+    @staticmethod
+    def websiteValidtity(URL):
+        #TODO: Implement
+        if URL == "":
+            return False
+        return True
 
     def run(self):
-        print("What product are you searching for?")
-        userprod = input().lower()
-        print(userprod)
-        self.displaymenu()
-        userweb = int(input())
-        # self.displayproducts()
 
         while True:
+            website = ""
 
-            if userweb == len(websites):
-                for website in websites:
-                    prodavail = self.model.scrape(website, userprod)
-                    if prodavail:
-                        self.buy()
-                    else:
-                        print("nope")
-                        sleep(10)
+            while not ProductBuyerViewController.websiteValidtity(website):
+                print("Please enter the URL of the website to use TCG Scraper:")
+                website = input()
+            
+            print("What product are you searching for?")
+            product = input().lower() # Program assumes the product entered is exact and correct
 
-            else:
-                prodavail = self.model.scrape(websites[userweb], userprod)
+            products = self.model.getProducts(website, product)
 
-                if prodavail:
-                    self.buy()
+            if self.displayProducts(products):
+                break
 
-                sleep(60)
+        #TODO: Select product to return avail
+        #TODO: Set amount of time
+        #TODO: Notify
+        #TODO: BUY
+            
+    def displayProducts(products : Dict[str, bool]) -> bool:
+        if len(products == 0):
+            print("No Products available")
+            return False
+        
+        print("Here's the list of related products:")
+        for x in products:
+
+            availability = "Out of Stock"
+
+            if products[x]:
+                availability = "In Stock"
+            print("\n" + str(x) + "." , products[x] , "->" , availability)
+
+        return True
 
 
     def buy(self):

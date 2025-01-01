@@ -13,3 +13,10 @@ Strategy
 
 Command
 
+
+
+find the text, if it has good % match
+-> add to the list of products
+-> if add to cart or in stock not visible on the site
+-> click on the button
+-> scan page for in stock
