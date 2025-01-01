@@ -1,2 +1,9 @@
+from ProductBuyerViewController import ProductBuyerViewController
+from ProductBuyerModel import ProductBuyerModel
+
 def main():
-    pass
+    model = ProductBuyerModel()
+    viewcontroller = ProductBuyerViewController(model)
+    viewcontroller.run()
+
+main()

@@ -9,7 +9,7 @@ class FactoryWebsiteStrat:
         strategy = None
 
         if websitename == "Walmart":
-            strategy = WalmartStrategy.getInstance()
+            strategy = WalmartStrategy()
         elif websitename == "Pokedeckstcg":
             strategy = PokedeckstcgStrategy()
 

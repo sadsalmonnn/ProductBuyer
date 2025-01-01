@@ -1,24 +1,28 @@
 from WebsiteStrategy import WebsiteStrategy
 from FactoryWebsiteStrat import FactoryWebsiteStrat
-from typing import Dict
+from typing import Dict, List
+from DriverSingleton import DriverSingleton
 
 websites = ["Walmart", "Pokedeckstcg"]
 
 class ProductBuyerModel:
     _strategy: WebsiteStrategy
-    _websites: Dict[str, Dict[str, int]]
+    _stocks: Dict[str, List[str]]
+    # {Pokdeckstcg : ["C$289.99", "In Stock"], Walmart : ["C$2.00", "Out of Stock"]}
 
     def __init__(self):
-        self._websites = {}
+        self._stocks = {}
+        self._strategy = None
+        self._webdriver = DriverSingleton.get_driver()
+        
 
-    def scrape(userweb:str, userprod:str) -> bool:
-        _strategy = FactoryWebsiteStrat.create(userweb)
-        websites[userweb] = _strategy.scrape(userprod)
+    def scrape(self, userweb:str, userprod:str) -> bool:
+        self._strategy = FactoryWebsiteStrat.create(userweb)
+        prodinfo = self._strategy.scrape(userprod, self._webdriver)
 
-        prodavail = checkProd(userweb)
+        if len(prodinfo) > 0:
+            self._stocks.update({userweb: prodinfo})
+        else:
+            return False
 
-        # products = {fdjshf: 1, fjdsfs: 2}
-        return prodavail
-    
-    def getProducts(userweb):
-        pass
+        return prodinfo[1] == "In Stock"
