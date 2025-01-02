@@ -1,52 +1,63 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.options import Options
+# from selenium import webdriver
+# from selenium.webdriver.chrome.service import Service
+# from webdriver_manager.chrome import ChromeDriverManager
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
+# from selenium.webdriver.chrome.options import Options
 
-# Instead of directly passing the path as a string, use Service
-service = Service(ChromeDriverManager().install())
+# import undetected_chromedriver as uc
 
-# 
-options = Options()
-# adding argument to disable the AutomationControlled flag 
-options.add_argument("--disable-blink-features=AutomationControlled") 
+
+# # Instead of directly passing the path as a string, use Service
+# # service = Service(ChromeDriverManager().install())
+
+# driver = uc.Chrome("chromedriver.exe")
+
+# # # 
+# # options = Options()
+# # # adding argument to disable the AutomationControlled flag 
+# # options.add_argument("--disable-blink-features=AutomationControlled") 
  
-# exclude the collection of enable-automation switches 
-options.add_experimental_option("excludeSwitches", ["enable-automation"]) 
+# # # exclude the collection of enable-automation switches 
+# # options.add_experimental_option("excludeSwitches", ["enable-automation"]) 
  
-# turn-off userAutomationExtension 
-options.add_experimental_option("useAutomationExtension", False) 
+# # # turn-off userAutomationExtension 
+# # options.add_experimental_option("useAutomationExtension", False) 
 
+# # # Initialize the WebDriver with the service object
+# # driver = webdriver.Chrome(service=service, options=options)
 
+# # driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})") 
 
+# # # Once we have initialized the driver and the web browser, we can open a website
+# # driver.get("https://www.pokemoncenter.com/search/pokemon-surging-sparks-booster-box")
 
-# Initialize the WebDriver with the service object
-driver = webdriver.Chrome(service=service, options=options)
+# # import time
+# # time.sleep(100000)
+# # userprod = "Pokémon TCG: Scarlet & Violet-Surging Sparks Booster Display Box (36 Packs)"
+# # EC.visibility_of_element_located((By.XPATH, f"//*[@text()='{userprod}']"))
+# # try:
+# #     element = WebDriverWait(driver, 100).until( EC.presence_of_element_located((By.XPATH, f"//*[@text()='{userprod}']")))
+# #     element.click()
+# # except:
+# #     element = None
 
-driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})") 
+# # if element != None:
+# #     span_list = element.find_elements(By.TAG_NAME, "span")
+# #     for x in span_list:
+# #         print(x.text)
 
-# Once we have initialized the driver and the web browser, we can open a website
-driver.get("https://www.pokemoncenter.com/search/pokemon-surging-sparks-booster-box")
-
+# # Other functions
+# # print(driver.title) # Website title
+# # driver.close() # Closes current tab
+# # driver.quit() # Closes entire browser
 import time
-time.sleep(100000)
-userprod = "Pokémon TCG: Scarlet & Violet-Surging Sparks Booster Display Box (36 Packs)"
-# EC.visibility_of_element_located((By.XPATH, f"//*[@text()='{userprod}']"))
-# try:
-#     element = WebDriverWait(driver, 100).until( EC.presence_of_element_located((By.XPATH, f"//*[@text()='{userprod}']")))
-#     element.click()
-# except:
-#     element = None
 
-# if element != None:
-#     span_list = element.find_elements(By.TAG_NAME, "span")
-#     for x in span_list:
-#         print(x.text)
+import undetected_chromedriver as uc
 
-# Other functions
-# print(driver.title) # Website title
-# driver.close() # Closes current tab
-# driver.quit() # Closes entire browser
+if __name__ == "__main__":
+    driver = uc.Chrome()
+    driver.get("https://www.pokedeckstcg.com")
+    # driver.get("https://www.pokemoncenter.com/search/pokemon-surging-sparks-booster-box")
+    time.sleep(60)
